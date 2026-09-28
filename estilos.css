@@ -1,0 +1,649 @@
+/* ==========================================================================
+   1. VARIÁVEIS
+   ========================================================================== */
+:root {
+    /* Cores */
+    --cor-primaria: #2E7D32;
+    --cor-primaria-clara: #66BB6A;
+    --cor-secundaria: #1565C0;
+    --cor-destaque: #F9A825;
+    --cor-fundo: #F5F5F5;
+    --cor-branca: #FFFFFF;
+    --cor-texto: #212121;
+    --cor-borda: #BDBDBD;
+
+    /* Cores de feedback */
+    --cor-sucesso: #2E7D32;
+    --cor-sucesso-fundo: #E8F5E9;
+    --cor-erro: #C62828;
+    --cor-erro-fundo: #FFEBEE;
+    --cor-aviso: #F9A825;
+    --cor-aviso-fundo: #FFF8E1;
+    --cor-info: #1565C0;
+    --cor-info-fundo: #E3F2FD;
+
+    /* Tipografia */
+    --texto-xs: 0.75rem;
+    --texto-sm: 0.875rem;
+    --texto-md: 1rem;
+    --texto-lg: 1.5rem;
+    --texto-xl: 2rem;
+
+    /* Espaçamentos */
+    --espaco-1: 0.25rem;
+    --espaco-2: 0.5rem;
+    --espaco-3: 1rem;
+    --espaco-4: 1.5rem;
+    --espaco-5: 2rem;
+
+    /* Extras */
+    --raio: 6px;
+    --sombra: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --transicao: 0.3s;
+}
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: var(--texto-md);
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo);
+}
+
+/* ==========================================================================
+   3. LAYOUT (GRID DE 12 COLUNAS)
+   ========================================================================== */
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Ocupação de colunas */
+.col-1  { grid-column: span 1; }
+.col-2  { grid-column: span 2; }
+.col-3  { grid-column: span 3; }
+.col-4  { grid-column: span 4; }
+.col-5  { grid-column: span 5; }
+.col-6  { grid-column: span 6; }
+.col-7  { grid-column: span 7; }
+.col-8  { grid-column: span 8; }
+.col-9  { grid-column: span 9; }
+.col-10 { grid-column: span 10; }
+.col-11 { grid-column: span 11; }
+.col-12 { grid-column: span 12; }
+
+/* ==========================================================================
+   4. CABEÇALHO, NAVEGAÇÃO E RODAPÉ
+   ========================================================================== */
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.submenu {
+    display: none;
+}
+
+.menu-item:hover .submenu {
+    display: block;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.rodape {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==========================================================================
+   5. BOTÕES
+   ========================================================================== */
+button {
+    background-color: var(--cor-primaria);
+    color: var(--cor-branca);
+    border: none;
+    border-radius: var(--raio);
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+button:hover {
+    background-color: var(--cor-primaria-clara);
+}
+
+button:focus {
+    outline: 2px solid var(--cor-secundaria);
+    box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.25);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Botão em carregamento: <button class="btn-carregando"> */
+.btn-carregando {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+}
+
+.btn-carregando::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: -0.55rem 0 0 -0.55rem;
+    border: 2px solid var(--cor-branca);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: girar 0.7s linear infinite;
+}
+
+/* ==========================================================================
+   6. FORMULÁRIOS
+   ========================================================================== */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+input {
+    padding: var(--espaco-2) var(--espaco-3);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    transition: var(--transicao);
+}
+
+input:focus {
+    border-color: var(--cor-secundaria);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.2);
+}
+
+/* :user-valid / :user-invalid só aparecem depois que o usuário interage,
+   evitando campos vermelhos logo ao carregar a página */
+input:user-valid {
+    border-color: var(--cor-sucesso);
+}
+
+input:user-invalid {
+    border-color: var(--cor-erro);
+}
+
+/* Classes manuais (úteis para validação via JavaScript) */
+input.is-valido {
+    border-color: var(--cor-sucesso);
+}
+
+input.is-invalido {
+    border-color: var(--cor-erro);
+}
+
+/* ==========================================================================
+   7. CARDS
+   ========================================================================== */
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card {
+    background-color: var(--cor-branca);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    transition: var(--transicao);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra);
+}
+
+/* ==========================================================================
+   8. COMPONENTES DE FEEDBACK
+   ========================================================================== */
+
+/* --- 8.1 Alertas -------------------------------------------------------
+   <div class="alerta alerta-sucesso" role="alert">
+       <span class="alerta-icone">✔</span>
+       <div class="alerta-conteudo">
+           <strong class="alerta-titulo">Pronto!</strong>
+           Dados salvos com sucesso.
+       </div>
+       <button class="alerta-fechar" aria-label="Fechar">&times;</button>
+   </div>
+------------------------------------------------------------------------- */
+.alerta {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espaco-3);
+    padding: var(--espaco-3);
+    border: 1px solid var(--alerta-cor, var(--cor-info));
+    border-left-width: 4px;
+    border-radius: var(--raio);
+    background-color: var(--alerta-fundo, var(--cor-info-fundo));
+    color: var(--cor-texto);
+    font-size: var(--texto-sm);
+}
+
+.alerta-icone {
+    flex-shrink: 0;
+    color: var(--alerta-cor, var(--cor-info));
+    font-weight: bold;
+}
+
+.alerta-conteudo {
+    flex: 1;
+}
+
+.alerta-titulo {
+    display: block;
+    margin-bottom: var(--espaco-1);
+    color: var(--alerta-cor, var(--cor-info));
+}
+
+.alerta-fechar {
+    background: transparent;
+    color: var(--cor-texto);
+    padding: 0 var(--espaco-2);
+    font-size: var(--texto-lg);
+    line-height: 1;
+    opacity: 0.6;
+}
+
+.alerta-fechar:hover {
+    background: transparent;
+    opacity: 1;
+}
+
+.alerta-sucesso {
+    --alerta-cor: var(--cor-sucesso);
+    --alerta-fundo: var(--cor-sucesso-fundo);
+}
+
+.alerta-erro {
+    --alerta-cor: var(--cor-erro);
+    --alerta-fundo: var(--cor-erro-fundo);
+}
+
+.alerta-aviso {
+    --alerta-cor: #B27A00; /* versão mais escura do destaque, para manter contraste */
+    --alerta-fundo: var(--cor-aviso-fundo);
+    border-color: var(--cor-aviso);
+}
+
+.alerta-info {
+    --alerta-cor: var(--cor-info);
+    --alerta-fundo: var(--cor-info-fundo);
+}
+
+/* --- 8.2 Toasts (notificações temporárias) -----------------------------
+   <div class="toast-container">
+       <div class="toast toast-sucesso" role="status">Salvo!</div>
+   </div>
+   Adicione a classe .toast-saindo via JS antes de remover o elemento.
+------------------------------------------------------------------------- */
+.toast-container {
+    position: fixed;
+    top: var(--espaco-4);
+    right: var(--espaco-4);
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-2);
+    max-width: 360px;
+}
+
+.toast {
+    padding: var(--espaco-3);
+    border-radius: var(--raio);
+    background-color: var(--cor-texto);
+    color: var(--cor-branca);
+    font-size: var(--texto-sm);
+    box-shadow: var(--sombra);
+    animation: toast-entrar 0.3s ease-out;
+}
+
+.toast-sucesso { background-color: var(--cor-sucesso); }
+.toast-erro    { background-color: var(--cor-erro); }
+.toast-aviso   { background-color: var(--cor-aviso); color: var(--cor-texto); }
+.toast-info    { background-color: var(--cor-info); }
+
+.toast-saindo {
+    animation: toast-sair 0.3s ease-in forwards;
+}
+
+/* --- 8.3 Mensagens de campo (validação) -------------------------------
+   <input class="is-invalido">
+   <span class="campo-mensagem campo-erro">E-mail inválido</span>
+------------------------------------------------------------------------- */
+.campo-mensagem {
+    display: block;
+    margin-top: var(--espaco-1);
+    font-size: var(--texto-xs);
+}
+
+.campo-erro    { color: var(--cor-erro); }
+.campo-sucesso { color: var(--cor-sucesso); }
+.campo-ajuda   { color: #616161; }
+
+/* --- 8.4 Modal de confirmação -----------------------------------------
+   <div class="modal-overlay ativo">
+       <div class="modal" role="dialog" aria-modal="true">
+           <h2 class="modal-titulo">Confirmar exclusão</h2>
+           <p>Esta ação não pode ser desfeita.</p>
+           <div class="modal-acoes">...botões...</div>
+       </div>
+   </div>
+------------------------------------------------------------------------- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--espaco-3);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay.ativo {
+    display: flex;
+}
+
+.modal {
+    width: 100%;
+    max-width: 480px;
+    padding: var(--espaco-4);
+    border-radius: var(--raio);
+    background-color: var(--cor-branca);
+    box-shadow: var(--sombra);
+    animation: modal-entrar 0.25s ease-out;
+}
+
+.modal-titulo {
+    margin: 0 0 var(--espaco-3);
+    font-size: var(--texto-lg);
+}
+
+.modal-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--espaco-2);
+    margin-top: var(--espaco-4);
+}
+
+/* Botões auxiliares para o modal e outros contextos */
+.btn-secundario {
+    background-color: transparent;
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+}
+
+.btn-secundario:hover {
+    background-color: var(--cor-fundo);
+}
+
+.btn-perigo {
+    background-color: var(--cor-erro);
+}
+
+.btn-perigo:hover {
+    background-color: #E53935;
+}
+
+/* --- 8.5 Spinner de carregamento ---------------------------------------
+   <div class="spinner" role="status" aria-label="Carregando"></div>
+------------------------------------------------------------------------- */
+.spinner {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid var(--cor-borda);
+    border-top-color: var(--cor-primaria);
+    border-radius: 50%;
+    animation: girar 0.8s linear infinite;
+}
+
+.spinner-sm { width: 1rem; height: 1rem; border-width: 2px; }
+.spinner-lg { width: 3rem; height: 3rem; border-width: 4px; }
+
+/* --- 8.6 Barra de progresso --------------------------------------------
+   <div class="progresso" role="progressbar" aria-valuenow="60"
+        aria-valuemin="0" aria-valuemax="100">
+       <div class="progresso-barra" style="width: 60%"></div>
+   </div>
+------------------------------------------------------------------------- */
+.progresso {
+    width: 100%;
+    height: 0.75rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: var(--cor-borda);
+}
+
+.progresso-barra {
+    height: 100%;
+    background-color: var(--cor-primaria);
+    transition: width var(--transicao);
+}
+
+/* --- 8.7 Badges (etiquetas de status) ---------------------------------
+   <span class="badge badge-sucesso">Ativo</span>
+------------------------------------------------------------------------- */
+.badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background-color: var(--cor-borda);
+    color: var(--cor-texto);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+}
+
+.badge-sucesso { background-color: var(--cor-sucesso-fundo); color: var(--cor-sucesso); }
+.badge-erro    { background-color: var(--cor-erro-fundo);    color: var(--cor-erro); }
+.badge-aviso   { background-color: var(--cor-aviso-fundo);   color: #B27A00; }
+.badge-info    { background-color: var(--cor-info-fundo);    color: var(--cor-info); }
+
+/* --- 8.8 Tooltip -------------------------------------------------------
+   <span class="tooltip" data-tooltip="Texto de ajuda" tabindex="0">?</span>
+------------------------------------------------------------------------- */
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    z-index: 900;
+    padding: var(--espaco-1) var(--espaco-2);
+    border-radius: 4px;
+    background-color: var(--cor-texto);
+    color: var(--cor-branca);
+    font-size: var(--texto-xs);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%);
+    transition: opacity 0.2s;
+}
+
+.tooltip:hover::after,
+.tooltip:focus::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- 8.9 Skeleton (placeholder de carregamento) ------------------------
+   <div class="skeleton" style="height: 1rem; width: 60%"></div>
+------------------------------------------------------------------------- */
+.skeleton {
+    border-radius: var(--raio);
+    background: linear-gradient(90deg, #E0E0E0 25%, #EEEEEE 50%, #E0E0E0 75%);
+    background-size: 200% 100%;
+    animation: skeleton 1.4s ease-in-out infinite;
+}
+
+/* --- 8.10 Estado vazio -------------------------------------------------
+   <div class="estado-vazio">
+       <p>Nenhum projeto encontrado.</p>
+       <button>Criar projeto</button>
+   </div>
+------------------------------------------------------------------------- */
+.estado-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espaco-3);
+    padding: var(--espaco-5);
+    border: 2px dashed var(--cor-borda);
+    border-radius: var(--raio);
+    color: #616161;
+    text-align: center;
+}
+
+/* ==========================================================================
+   9. ANIMAÇÕES
+   ========================================================================== */
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes toast-entrar {
+    from { opacity: 0; transform: translateX(100%); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toast-sair {
+    to { opacity: 0; transform: translateX(100%); }
+}
+
+@keyframes modal-entrar {
+    from { opacity: 0; transform: translateY(-16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes skeleton {
+    from { background-position: 200% 0; }
+    to   { background-position: -200% 0; }
+}
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ==========================================================================
+   10. RESPONSIVO
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 var(--espaco-3);
+    }
+}
+
+@media (max-width: 992px) {
+    .col-1, .col-2, .col-3, .col-4 {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Navegação móvel */
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    /* Grid */
+    .col-5, .col-6, .col-7, .col-8 {
+        grid-column: span 12;
+    }
+}
+
+@media (max-width: 576px) {
+    [class*="col-"] {
+        grid-column: span 12;
+    }
+
+    .toast-container {
+        left: var(--espaco-3);
+        right: var(--espaco-3);
+        max-width: none;
+    }
+
+    .modal-acoes {
+        flex-direction: column-reverse;
+    }
+
+    .modal-acoes button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    :root {
+        --texto-lg: 1.25rem;
+        --texto-xl: 1.5rem;
+    }
+
+    button {
+        padding: 0.65rem 1rem;
+    }
+}

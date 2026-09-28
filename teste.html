@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Teste dos componentes</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Apenas para a página de teste ficar legível */
+        section { background: var(--cor-branca); padding: var(--espaco-4); border-radius: var(--raio); margin-bottom: var(--espaco-4); }
+        h2 { margin-top: 0; font-size: var(--texto-lg); }
+        .linha { display: flex; flex-wrap: wrap; gap: var(--espaco-2); align-items: center; }
+        .cabecalho { background: var(--cor-primaria); color: var(--cor-branca); padding: var(--espaco-3); }
+        .nav-links a { color: var(--cor-branca); text-decoration: none; }
+        .menu-item { position: relative; list-style: none; }
+        .submenu { position: absolute; background: var(--cor-branca); padding: var(--espaco-2); border-radius: var(--raio); box-shadow: var(--sombra); }
+        .submenu a { color: var(--cor-texto); }
+        .rodape { padding: var(--espaco-4); }
+        main { max-width: 1200px; margin: var(--espaco-4) auto; padding: 0 var(--espaco-3); }
+        .demo-col { background: var(--cor-info-fundo); padding: var(--espaco-3); text-align: center; border-radius: var(--raio); }
+    </style>
+</head>
+<body>
+
+<!-- CABEÇALHO E MENU -->
+<header class="cabecalho">
+    <strong>Meu Projeto</strong>
+    <nav class="menu">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+        <ul class="nav-links" id="navLinks" style="margin:0;padding:0">
+            <li class="menu-item"><a href="#">Início</a></li>
+            <li class="menu-item">
+                <a href="#">Projetos ▾</a>
+                <div class="submenu"><a href="#">Ver todos</a></div>
+            </li>
+            <li class="menu-item"><a href="#">Contato</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <!-- GRID -->
+    <section>
+        <h2>Grid de 12 colunas</h2>
+        <p>Redimensione a janela para ver as colunas se reorganizando.</p>
+        <div class="container">
+            <div class="col-3 demo-col">col-3</div>
+            <div class="col-3 demo-col">col-3</div>
+            <div class="col-3 demo-col">col-3</div>
+            <div class="col-3 demo-col">col-3</div>
+            <div class="col-6 demo-col">col-6</div>
+            <div class="col-6 demo-col">col-6</div>
+        </div>
+    </section>
+
+    <!-- ALERTAS -->
+    <section>
+        <h2>Alertas</h2>
+        <div class="cards">
+            <div class="alerta alerta-sucesso" role="alert">
+                <span class="alerta-icone">✔</span>
+                <div class="alerta-conteudo"><strong class="alerta-titulo">Sucesso</strong>Dados salvos com sucesso.</div>
+                <button class="alerta-fechar" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="alerta alerta-erro" role="alert">
+                <span class="alerta-icone">✖</span>
+                <div class="alerta-conteudo"><strong class="alerta-titulo">Erro</strong>Não foi possível concluir a operação.</div>
+                <button class="alerta-fechar" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="alerta alerta-aviso" role="alert">
+                <span class="alerta-icone">!</span>
+                <div class="alerta-conteudo"><strong class="alerta-titulo">Atenção</strong>Sua sessão expira em 5 minutos.</div>
+                <button class="alerta-fechar" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="alerta alerta-info" role="status">
+                <span class="alerta-icone">i</span>
+                <div class="alerta-conteudo"><strong class="alerta-titulo">Informação</strong>Há uma nova versão disponível.</div>
+                <button class="alerta-fechar" aria-label="Fechar">&times;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOASTS -->
+    <section>
+        <h2>Toasts</h2>
+        <div class="linha">
+            <button onclick="mostrarToast('Salvo com sucesso!', 'sucesso')">Toast sucesso</button>
+            <button onclick="mostrarToast('Algo deu errado.', 'erro')" class="btn-perigo">Toast erro</button>
+            <button onclick="mostrarToast('Verifique os dados.', 'aviso')">Toast aviso</button>
+            <button onclick="mostrarToast('Nova mensagem recebida.', 'info')">Toast info</button>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <section>
+        <h2>Modal de confirmação</h2>
+        <button class="btn-perigo" onclick="abrirModal()">Excluir projeto</button>
+    </section>
+
+    <!-- FORMULÁRIO -->
+    <section>
+        <h2>Formulário e validação</h2>
+        <form class="formulario" id="formulario" novalidate style="max-width:400px">
+            <div>
+                <input type="email" id="email" placeholder="seu@email.com" required style="width:100%">
+                <span class="campo-mensagem campo-ajuda" id="emailMsg">Digite um e-mail válido.</span>
+            </div>
+            <button type="submit" id="btnEnviar">Enviar</button>
+        </form>
+    </section>
+
+    <!-- LOADING -->
+    <section>
+        <h2>Carregamento e progresso</h2>
+        <div class="linha">
+            <div class="spinner spinner-sm"></div>
+            <div class="spinner"></div>
+            <div class="spinner spinner-lg"></div>
+        </div>
+        <br>
+        <div class="progresso" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progresso">
+            <div class="progresso-barra" id="progressoBarra" style="width:0%"></div>
+        </div>
+        <br>
+        <div class="linha">
+            <button onclick="simularProgresso()">Simular progresso</button>
+            <button id="btnCarregar" onclick="simularBotao()">Botão com loading</button>
+        </div>
+        <br>
+        <div class="skeleton" style="height:1rem;width:60%;margin-bottom:8px"></div>
+        <div class="skeleton" style="height:1rem;width:80%;margin-bottom:8px"></div>
+        <div class="skeleton" style="height:1rem;width:40%"></div>
+    </section>
+
+    <!-- BADGES, TOOLTIP, ESTADO VAZIO, CARD -->
+    <section>
+        <h2>Badges, tooltip, card e estado vazio</h2>
+        <div class="linha">
+            <span class="badge">Padrão</span>
+            <span class="badge badge-sucesso">Ativo</span>
+            <span class="badge badge-erro">Cancelado</span>
+            <span class="badge badge-aviso">Pendente</span>
+            <span class="badge badge-info">Novo</span>
+            <span class="tooltip" data-tooltip="Texto de ajuda" tabindex="0">❓ Passe o mouse</span>
+        </div>
+        <br>
+        <div class="card" style="padding:1rem;max-width:300px">Passe o mouse sobre este card.</div>
+        <br>
+        <div class="estado-vazio">
+            <p>Nenhum projeto encontrado.</p>
+            <button>Criar projeto</button>
+        </div>
+    </section>
+
+</main>
+
+<footer class="rodape">Rodapé</footer>
+
+<!-- MODAL (fica fora do fluxo da página) -->
+<div class="modal-overlay" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+        <h2 class="modal-titulo" id="modalTitulo">Confirmar exclusão</h2>
+        <p>Esta ação não pode ser desfeita.</p>
+        <div class="modal-acoes">
+            <button class="btn-secundario" onclick="fecharModal()">Cancelar</button>
+            <button class="btn-perigo" onclick="confirmarExclusao()">Excluir</button>
+        </div>
+    </div>
+</div>
+
+<!-- Container dos toasts -->
+<div class="toast-container" id="toasts"></div>
+
+<script>
+    /* Menu hambúrguer */
+    document.getElementById('menuToggle').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('active');
+    });
+
+    /* Fechar alertas */
+    document.querySelectorAll('.alerta-fechar').forEach(btn => {
+        btn.addEventListener('click', () => btn.closest('.alerta').remove());
+    });
+
+    /* Toasts */
+    function mostrarToast(mensagem, tipo) {
+        const toast = document.createElement('div');
+        toast.className = 'toast toast-' + tipo;
+        toast.setAttribute('role', 'status');
+        toast.textContent = mensagem;
+        document.getElementById('toasts').appendChild(toast);
+        setTimeout(() => {
+            toast.classList.add('toast-saindo');
+            toast.addEventListener('animationend', () => toast.remove());
+        }, 3000);
+    }
+
+    /* Modal */
+    const modal = document.getElementById('modal');
+    function abrirModal() { modal.classList.add('ativo'); }
+    function fecharModal() { modal.classList.remove('ativo'); }
+    function confirmarExclusao() {
+        fecharModal();
+        mostrarToast('Projeto excluído.', 'sucesso');
+    }
+    modal.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+    /* Validação do formulário */
+    const form = document.getElementById('formulario');
+    const email = document.getElementById('email');
+    const emailMsg = document.getElementById('emailMsg');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (email.checkValidity()) {
+            email.classList.remove('is-invalido');
+            email.classList.add('is-valido');
+            emailMsg.className = 'campo-mensagem campo-sucesso';
+            emailMsg.textContent = 'E-mail válido!';
+            mostrarToast('Formulário enviado.', 'sucesso');
+        } else {
+            email.classList.remove('is-valido');
+            email.classList.add('is-invalido');
+            emailMsg.className = 'campo-mensagem campo-erro';
+            emailMsg.textContent = 'Informe um e-mail válido.';
+        }
+    });
+
+    /* Progresso */
+    function simularProgresso() {
+        const barra = document.getElementById('progressoBarra');
+        const caixa = document.getElementById('progresso');
+        let valor = 0;
+        const id = setInterval(() => {
+            valor += 10;
+            barra.style.width = valor + '%';
+            caixa.setAttribute('aria-valuenow', valor);
+            if (valor >= 100) {
+                clearInterval(id);
+                mostrarToast('Concluído!', 'sucesso');
+            }
+        }, 300);
+    }
+
+    /* Botão com loading */
+    function simularBotao() {
+        const btn = document.getElementById('btnCarregar');
+        btn.classList.add('btn-carregando');
+        setTimeout(() => btn.classList.remove('btn-carregando'), 2000);
+    }
+</script>
+</body>
+</html>
